@@ -50,7 +50,7 @@ namespace kv_node {
 
 namespace skip_list {
     const std::string delimiter = ":";
-    const std::string STORE_FILE = "store/dumpFile.txt";
+    const std::string STORE_FILE = "../store/dumpFile.txt";
 
     // 实现跳表类
     template<typename K, typename V>
