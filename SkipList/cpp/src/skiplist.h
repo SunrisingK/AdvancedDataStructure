@@ -50,7 +50,7 @@ namespace kv_node {
 
 namespace skip_list {
     const std::string delimiter = ":";
-    const std::string STORE_FILE = "../store/dumpFile.txt";
+    const std::string STORE_FILE = "store/dumpFile.txt";
 
     // 实现跳表类
     template<typename K, typename V>
@@ -232,13 +232,11 @@ namespace skip_list {
         }
 
 
-        // 加共享锁的读文件方法
         void loadFile() {
-            std::unique_lock<std::shared_mutex> lock(rw_mutex);
             std::ifstream file_reader(STORE_FILE);
             if (!file_reader.is_open()) return;
 
-            std::cout << "load file------------------------------------------------------" << std::endl;
+            std::cout << "\n==================== load file ====================" << std::endl;
             
             std::string line;
             // 读取一行
@@ -246,8 +244,8 @@ namespace skip_list {
                 std::string key, value;
                 getKeyValueFromString(line, key, value);
                 if (key.empty() || value.empty()) continue;
+                std::cout << key << delimiter << value << std::endl; 
                 insertNode(stoi(key), value);
-                std::cout << "key: " << key << " value: " << value << std::endl; 
             }
 
             file_reader.close();
@@ -257,10 +255,13 @@ namespace skip_list {
         // 加独占锁的写文件方法
         void dumpFile() {
             std::unique_lock<std::shared_mutex> lock(rw_mutex);
-            std::ofstream file_writer(STORE_FILE);
-            if (!file_writer.is_open()) return;
+            std::ofstream file_writer(STORE_FILE, std::ios::out | std::ios::binary);
+            if (!file_writer.is_open()) {
+                std::cerr << "Failed to open file for writing: " << STORE_FILE << std::endl;
+                return;
+            }
             
-            std::cout << "dump file------------------------------------------------------" << std::endl;
+            std::cout << "\n==================== dump fil e====================" << std::endl;
             
             //只遍历跳表的第0层级
             auto node = this->head->forward[0];

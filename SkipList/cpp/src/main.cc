@@ -6,6 +6,9 @@ int main(int argc, char const* argv[]) {
     // 创建跳表对象, 最大高度为10
     SkipList<int, std::string> skipList(10);
 
+    skipList.loadFile();
+    skipList.displaySkipList();
+
     skipList.insertNode(1, "是徒为静养");
     skipList.insertNode(3, "而不用克己工夫也");
     skipList.insertNode(7, "如此");
@@ -13,8 +16,6 @@ int main(int argc, char const* argv[]) {
     skipList.insertNode(9, "人需在事上磨");
     skipList.insertNode(11, "事以秘成");
     skipList.insertNode(12, "尽人事知天命");
-    skipList.insertNode(13, "憾无穷");
-    skipList.insertNode(14, "人生长恨水长东");
     skipList.insertNode(15, "天涯去后");
     skipList.insertNode(16, "乡关外");
     skipList.insertNode(17, "听风声诉幽怀");
@@ -35,7 +36,7 @@ int main(int argc, char const* argv[]) {
     skipList.deleteNode(19);
     std::cout << "skip_list size:" << skipList.size() << std::endl;
     
-    skipList.displaySkipList(); 
+    skipList.displaySkipList();
 
     return 0;
 }
